@@ -13,18 +13,31 @@
 
 <body>
 
-    <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a th:href="@{/}" class="navbar-brand">TechJobs</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/search}">Search</a></li>
-                    <li><a th:href="@{/list}">List</a></li>
-                </ul>
+    <div th:fragment="page-header" class="page-header">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a th:href="@{/}" class="navbar-brand">TechJobs</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li th:each="action : ${actions}">
+                            <a th:href="@{'/' + ${action.key}}" th:text="${action.value}"></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div th:fragment="column-choices" class="container body-content">
+        <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+        <h2>View All</h2>
+        <ul>
+            <li th:each="column : ${columns}">
+                <a th:href="@{/list/values(column=${column.key})}" th:text="${column.value}"></a>
+            </li>
+        </ul>
     </div>
 
 </body>
